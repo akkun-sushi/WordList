@@ -2,7 +2,6 @@
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Words } from '../types';
-import { deleteWord, editWord, getAllWords, updateWords } from '../api';
 
 interface WordProps {
     word: Words;
@@ -25,7 +24,7 @@ const Word = ({ word, isEditing, editingWord, onedit, onsave, ondelete }: WordPr
             setEditedWordEn(editingWord.en)
             setEditedWordJa(editingWord.ja)
         }
-    })
+    }, [isEditing, editingWord])
 
     return (
         <li className='flex'>
@@ -53,67 +52,3 @@ const Word = ({ word, isEditing, editingWord, onedit, onsave, ondelete }: WordPr
         </li>
     );
 };
-
-/*
-const Word = ({ word }: WordProps) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const [editedWordEn, setEditedWordEn] = useState(word.en);
-    const [editedWordJa, setEditedWordJa] = useState(word.ja);
-
-    const handleChangeEn = (e: ChangeEvent<HTMLInputElement>) => setEditedWordEn(e.target.value);
-    const handleChangeJa = (e: ChangeEvent<HTMLInputElement>) => setEditedWordJa(e.target.value);
-
-    const handleEdit = () => {
-        setIsEditing(true);
-    };
-
-    const handleSave = async () => {
-        await editWord(word.id, editedWordEn, editedWordJa);
-        setIsEditing(false);
-    };
-
-    const handleDelete = async () => {
-        console.log(isEditing);
-        if (isEditing) {
-            return;
-        };
-        await deleteWord(word.id);
-        const words = await getAllWords();
-        let updateId = 1;
-        for (const word of words) {
-            await deleteWord(word.id)
-            word.id = updateId.toString();
-            await updateWords(word);
-            updateId ++;
-        };
-    };
-
-    return (
-        <li className='flex'>
-            <span className='w-1/6 py-3 text-center'> { word.id }. </span>
-            {isEditing ? 
-                <input 
-                    type='text' 
-                    className='w-2/6 px-2 my-2 -ml-2 mr-2 border rounded-lg' 
-                    value={editedWordEn} 
-                    onChange={handleChangeEn}
-                /> : <span className='w-2/6 py-3 border-r-2 border-black mr-4'> {word.en} </span>}
-            {isEditing ? 
-                <input 
-                    type='text' 
-                    className='w-2/6 px-2 my-2 ml-1 mr-1 border rounded-lg' 
-                    value={editedWordJa}
-                    onChange={handleChangeJa}
-                /> : <span className='w-2/6 py-3'> { word.ja } </span>}
-            {isEditing ? 
-                <button className='w-1/6 text-base text-white bg-green-300 hover:bg-green-500 rounded-md mr-3 my-3 ml-3' onClick={()=>{handleSave()}}>決定</button>
-                : 
-                <button className='w-1/6 text-base text-white bg-blue-300 hover:bg-blue-500 rounded-md mr-3 my-3 ml-3' onClick={()=>{handleEdit()}}>編集</button>
-            }
-            <button className='w-1/6 text-base text-white bg-red-300 hover:bg-red-500 rounded-md my-3' onClick={handleDelete}>削除</button>
-        </li>
-    );
-};
-*/
-
-export default Word;
