@@ -9,18 +9,6 @@ interface WordsListProps {
   words: Words[];
 }
 
-/*
-const WordList = ({ words }: WordsListProps) => {
-  return (
-    <ul className='text-2xl' >
-      {words.map((word) => (
-        <Word key={word.id} word={word} />
-       ))}
-    </ul>
-  )
-}
-*/
-
 const WordList = ({ words }: WordsListProps) => {
   const [isEditing, setIsEditing] = useState<string | null>(null)
   const [editingWord, setEditingWord] = useState<{en: string, ja:string} | null>(null)
