@@ -297,6 +297,7 @@ const Three = () => {
         <directionalLight position={[2, 5, 10]} intensity={1} />
         {data.map(({ name, url, position, detail }) => (
           <Box
+            key={name}
             name={name}
             url={url}
             position={position}
