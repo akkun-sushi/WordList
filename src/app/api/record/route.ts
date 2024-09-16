@@ -9,7 +9,15 @@ export async function GET(req: Request, res: NextApiResponse) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json(data);
+  // CORS ヘッダーを追加してレスポンスを返す
+  const response = NextResponse.json(data);
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set(
+    "Access-Control-Allow-Headers",
+    "authorization, x-client-info, apikey, content-type"
+  );
+
+  return response;
 }
 
 export async function POST(req: Request, res: NextApiResponse) {
@@ -26,5 +34,13 @@ export async function POST(req: Request, res: NextApiResponse) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json(data);
+  // CORS ヘッダーを追加してレスポンスを返す
+  const response = NextResponse.json(data);
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set(
+    "Access-Control-Allow-Headers",
+    "authorization, x-client-info, apikey, content-type"
+  );
+
+  return response;
 }
