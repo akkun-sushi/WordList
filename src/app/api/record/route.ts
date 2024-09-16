@@ -28,6 +28,3 @@ export async function POST(req: Request, res: NextApiResponse) {
 
   return NextResponse.json(data);
 }
-
-//.insert([date, hour, minute, content])
-//.insert([{ date: date, hour: hour, minute: minute, content: content }])

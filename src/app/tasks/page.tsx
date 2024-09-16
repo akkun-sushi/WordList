@@ -19,7 +19,10 @@ const Tasks = () => {
 
   //学習時間取得
   const fetchData = async (content: string) => {
-    const res = await fetch(`${API_URL}/api/record`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}/api/record`, {
+      method: "GET",
+      cache: "no-store",
+    });
     const datas = await res.json();
 
     const now = new Date();
