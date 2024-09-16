@@ -45,3 +45,16 @@ export async function POST(req: Request, res: NextApiResponse) {
 
   return response;
 }
+
+export async function OPTIONS() {
+  // OPTIONS メソッドのリクエストに対応するための処理
+  const response = new NextResponse(null, { status: 204 });
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set(
+    "Access-Control-Allow-Headers",
+    "authorization, x-client-info, apikey, content-type"
+  );
+  response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+
+  return response;
+}
