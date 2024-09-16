@@ -16,6 +16,7 @@ import { GridHelper, Mesh } from "three";
 //各種型指定
 type Position = [number, number, number];
 type Information = {
+  id: number,
   name: string;
   url: string;
   position: Position;
@@ -47,6 +48,7 @@ const cam: Position[] = [
 //天体のデータ
 const data: Information[] = [
   {
+    id: 1,
     name: "単語",
     url: "/wordsList",
     position: [4, 0, 4],
@@ -54,6 +56,7 @@ const data: Information[] = [
       "単語は言語の最小単位であり、意味を持つ語のことを指します。語彙力を増やすことで、言語の理解と使用がより豊かになります。単語は文脈によって意味が変わることもあるため、適切な使い方を覚えることが重要です。",
   },
   {
+    id: 2,
     name: "公認会計士",
     url: "/tasks",
     position: [-4, 0, 4],
@@ -61,6 +64,7 @@ const data: Information[] = [
       "文法は、言語を構成するルールの体系であり、正しい文を作るための規則です。これには、語の順序や時制、数、性などが含まれます。文法を理解することで、意味が明確で正確なコミュニケーションが可能になります。",
   },
   {
+    id: 3,
     name: "目標",
     url: "",
     position: [4, 0, -4],
@@ -68,6 +72,7 @@ const data: Information[] = [
       "リスニングは、音声情報を聞き取って理解する能力です。これは、会話や講義、音声メディアを聞くことで養われるスキルであり、発音やイントネーション、文脈を理解することが求められます。リスニング力を高めることで、よりスムーズなコミュニケーションが可能になります。",
   },
   {
+    id: 4,
     name: "筋トレ",
     url: "",
     position: [-4, 0, -4],
@@ -295,9 +300,9 @@ const Three = () => {
         {/*<gridHelper position={[0, 0, 0]} args={[20, 20, "gray", "gray"]} />;*/}
         <ambientLight intensity={0.1} />
         <directionalLight position={[2, 5, 10]} intensity={1} />
-        {data.map(({ name, url, position, detail }) => (
+        {data.map(({ id, name, url, position, detail }) => (
           <Box
-            key={index}
+            key={id}
             name={name}
             url={url}
             position={position}
