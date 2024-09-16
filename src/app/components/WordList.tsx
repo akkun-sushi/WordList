@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react'
 import { Words } from '../types'
-import Word from './Word';
+
 import { deleteWord, editWord, getAllWords, updateWords } from '../api';
+import Word from './Word';
 
 interface WordsListProps {
   words: Words[];
@@ -42,7 +43,7 @@ const WordList = ({ words }: WordsListProps) => {
   return (
     <ul className='text-2xl' >
       {words.map((word) => (
-        <Word 
+        <Word
           key={word.id} 
           word={word} 
           isEditing={isEditing === word.id}

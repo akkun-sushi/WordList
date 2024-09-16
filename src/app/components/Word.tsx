@@ -52,3 +52,5 @@ const Word = ({ word, isEditing, editingWord, onedit, onsave, ondelete }: WordPr
         </li>
     );
 };
+
+export default Word
