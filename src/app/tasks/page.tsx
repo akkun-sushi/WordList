@@ -148,7 +148,7 @@ const Tasks = () => {
 
   //レンダー
   return (
-    <main className="bg-green-100 h-screen w-screen">
+    <main className="bg-green-100 md:h-screen w-screen">
       <div className="p-10">
         <section>
           <h1 className="md:text-4xl text-2xl font-bold">目標 </h1>
@@ -232,7 +232,7 @@ const Tasks = () => {
           </section>
         )}
 
-        <section className="flex md:flex-row flex-col pt-10 md:pl-20">
+        <section className="flex md:flex-row flex-col pt-10 md:pl-20 pb-96">
           <div className="flex items-center md:w-2/6 w-1/2 md:mx-0 mx-auto mb-5">
             <select
               value={display}
