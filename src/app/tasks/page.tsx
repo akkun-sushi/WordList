@@ -19,7 +19,10 @@ const Tasks = () => {
 
   //学習時間取得
   const fetchData = async (content: string) => {
-    const res = await fetch(`${API_URL}/api/record`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}/api/record`, {
+      method: "GET",
+      cache: "no-store",
+    });
     const datas = await res.json();
 
     const now = new Date();
@@ -145,74 +148,77 @@ const Tasks = () => {
 
   //レンダー
   return (
-    <main className="bg-green-100 h-screen">
+    <main className="bg-green-100 md:h-screen w-screen">
       <div className="p-10">
         <section>
-          <h1 className="text-4xl font-bold">目標 </h1>
-          <h2 className="text-3xl font-bold pt-3 pl-10">
-            公認会計士<span className="text-red-500 px-3">2025年12月</span>{" "}
-            1次試験合格
+          <h1 className="md:text-4xl text-2xl font-bold">目標 </h1>
+          <h2 className="md:text-3xl text-xl font-bold pt-3 pl-10">
+            公認会計士 <br />{" "}
+            <span className="text-red-500 px-3">2025年12月</span> 1次試験合格
           </h2>
         </section>
         <section className="flex flex-row pt-10">
-          <h2 className="text-4xl font-bold">成果</h2>
+          <h2 className="md:text-4xl text-2xl font-bold">成果</h2>
           <button
             onClick={() => setRecord(!record)}
-            className="bg-blue-100 text-blue-900 rounded-xl font-bold px-5 mx-5 text-xl shadow-md hover:text-red-500"
+            className="bg-blue-100 text-blue-900 rounded-xl font-bold px-5 mx-5 md:text-xl shadow-md hover:text-red-500"
           >
             記録
           </button>
-          <button className="bg-yellow-100 text-yellow-900 font-bold rounded-xl px-5 text-xl shadow-md hover:text-red-500">
+          <button className="bg-yellow-100 text-yellow-900 font-bold rounded-xl px-5 md:text-xl shadow-md hover:text-red-500">
             変更
           </button>
         </section>
+
         {record && (
-          <section className="py-5 mt-10 mx-10 border-4 border-green-300 rounded-lg">
+          <section className="py-5 md:px-0 px-10 mt-10 md:mx-32 border-4 border-green-300 rounded-lg">
             <form
               onSubmit={handleSubmit}
-              className="flex flex-row justify-center"
+              className="flex md:flex-row flex-col justify-center"
             >
-              <h3 className="text-2xl font-bold">日付</h3>
+              <h3 className="md:text-2xl text-lg font-bold">日付</h3>
               <input
                 required
                 type="date"
                 name="date"
                 value={state.date}
                 onChange={handleInputChange}
-                className="px-4 mx-4 font-bold"
+                className="px-4 mx-4 font-bold md:my-0 my-2"
               />
-              <h3 className="text-2xl font-bold">時間</h3>
-              <select
-                name="hour"
-                value={state.hour}
-                onChange={handleSelectChange}
-                className="ml-4 mr-2 font-bold"
-              >
-                {Array.from({ length: 13 }, (_, i) => (
-                  <option key={i} value={i}>
-                    {i}
-                  </option>
-                ))}
-              </select>
-              <h3 className="text-2xl font-bold">:</h3>
-              <select
-                name="minute"
-                value={state.minute}
-                onChange={handleSelectChange}
-                className="mx-4 font-bold"
-              >
-                {Array.from({ length: 7 }, (_, i) => (
-                  <option key={i + 1} value={i * 10}>
-                    {i * 10}
-                  </option>
-                ))}
-              </select>
-              <h3 className="text-2xl font-bold">学習内容</h3>
+              <h3 className="md:text-2xl text-lg font-bold">時間</h3>
+              <div className="flex flex-row md:my-0 my-2">
+                <select
+                  name="hour"
+                  value={state.hour}
+                  onChange={handleSelectChange}
+                  className="ml-4 mr-2 font-bold"
+                >
+                  {Array.from({ length: 13 }, (_, i) => (
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
+                  ))}
+                </select>
+                <h3 className="md:text-2xl text-lg font-bold">:</h3>
+                <select
+                  name="minute"
+                  value={state.minute}
+                  onChange={handleSelectChange}
+                  className="mx-4 font-bold"
+                >
+                  {Array.from({ length: 7 }, (_, i) => (
+                    <option key={i + 1} value={i * 10}>
+                      {i * 10}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <h3 className="md:text-2xl text-lg font-bold">学習内容</h3>
               <select
                 name="content"
                 value={state.content}
                 onChange={handleSelectChange}
-                className="font-bold ml-4 px-2"
+                className="font-bold mx-4 px-2 md:my-0 my-2"
               >
                 <option value="CA">会社法</option>
                 <option value="FA">財務会計論</option>
@@ -220,34 +226,37 @@ const Tasks = () => {
               <input
                 type="submit"
                 value="追加"
-                className="bg-blue-100 text-blue-900 rounded-xl font-bold px-5 ml-5 text-xl shadow-md hover:text-red-500"
+                className="bg-blue-100 text-blue-900 md:mt-0 mt-4 rounded-xl font-bold px-5 ml-5 text-xl shadow-md hover:text-red-500"
               />
             </form>
           </section>
         )}
-        <section className="flex flex-row pt-10 pl-20 ">
-          <div className="flex items-center w-2/6">
+
+        <section className="flex md:flex-row flex-col pt-10 md:pl-20 pb-96">
+          <div className="flex items-center md:w-2/6 w-1/2 md:mx-0 mx-auto mb-5">
             <select
               value={display}
               onChange={handleDisplayChange}
-              className="text-3xl font-bold border-4 rounded-3xl p-3 border-neutral-800 bg-green-100"
+              className="md:text-3xl text-xl font-bold border-4 rounded-3xl p-3 border-neutral-800 bg-green-100"
             >
               <option value="ALL">全体</option>
               <option value="CA">会社法</option>
               <option value="FA">財務会計論</option>
             </select>
           </div>
-          <div className="w-2/6">
-            <h3 className="font-bold pb-4">今週の勉強時間</h3>
-            <h1 className="text-7xl font-bold">
-              {weeklytotalHour} <span className="text-xl">時間</span>
-            </h1>
-          </div>
-          <div className="w-2/6">
-            <h3 className="font-bold pb-4">全期間の勉強時間</h3>
-            <h1 className="text-7xl font-bold">
-              {totalHour} <span className="text-xl">時間</span>
-            </h1>
+          <div className="flex flex-row">
+            <div className="md:w-2/6 w-1/2 flex flex-col items-center">
+              <h3 className="font-bold pb-4">今週の勉強時間</h3>
+              <h1 className="md:text-7xl text-5xl font-bold">
+                {weeklytotalHour} <span className="text-xl">時間</span>
+              </h1>
+            </div>
+            <div className="md:w-2/6 w-1/2 flex flex-col items-center">
+              <h3 className="font-bold pb-4">全期間の勉強時間</h3>
+              <h1 className="md:text-7xl text-5xl font-bold">
+                {totalHour} <span className="text-xl">時間</span>
+              </h1>
+            </div>
           </div>
         </section>
       </div>
