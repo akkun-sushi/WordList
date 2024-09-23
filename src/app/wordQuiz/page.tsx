@@ -8,7 +8,7 @@ import EditWord from "../components/wordsQuiz/EditWord";
 import DeleteWord from "../components/wordsQuiz/DeleteWord";
 import SortWord from "../components/wordsQuiz/SortWord";
 
-const wordsList = () => {
+const WordQuiz = () => {
   const [data, setData] = useState<Data[]>([]);
   const [sortType, setSortType] = useState<SortType>("CREATION_ASC");
   const [isAdding, setIsAdding] = useState<boolean>(false);
@@ -53,4 +53,4 @@ const wordsList = () => {
   );
 };
 
-export default wordsList;
+export default WordQuiz;

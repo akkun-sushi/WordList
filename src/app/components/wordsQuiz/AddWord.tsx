@@ -8,13 +8,15 @@ const AddWord = (props: PropsForComponent) => {
   const [term, setTerm] = useState("");
   const [meaning, setMeaning] = useState("");
 
+  const {isEditing, isDeleting} = props
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   //用語追加
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //編集中または削除中は追加不可
-    if (props.isEditing === "NULL" && props.isDeleting === "NULL") {
+    if (isEditing === "NULL" && isDeleting === "NULL") {
       props.setIsAdding(true);
       await Insert(term, meaning);
       setTerm("");
