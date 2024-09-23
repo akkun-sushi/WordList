@@ -3,11 +3,13 @@ import { PropsForComponent, SortType } from "@/app/api/wordQuiz/types";
 import React, { ChangeEvent, useEffect } from "react";
 
 const SortWord = (props: PropsForComponent) => {
+  const { setData, sortType, isAdding, isEditing, isDeleting } = props;
+
   useEffect(() => {
     //全データ取得
     const getAll = async () => {
       const data = await GetAll();
-      switch (props.sortType) {
+      switch (sortType) {
         case "CREATION_ASC":
           data?.sort(
             (a, b) =>
@@ -35,15 +37,15 @@ const SortWord = (props: PropsForComponent) => {
           data?.sort((a, b) => b.meaning.localeCompare(a.meaning, "ja"));
           break;
       }
-      props.setData(data || []);
+      setData(data || []);
     };
     //状態が変更され次第、画面更新
     getAll();
-  }, [props.sortType, props.isAdding, props.isEditing, props.isDeleting]);
+  }, [sortType, isAdding, isEditing, isDeleting]);
 
   return (
     <select
-      value={props.sortType}
+      value={sortType}
       onChange={(e: ChangeEvent<HTMLSelectElement>) =>
         props.setSortType(e.target.value as SortType)
       }

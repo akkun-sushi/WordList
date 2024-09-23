@@ -2,15 +2,17 @@ import { PropsForComponent } from "@/app/api/wordQuiz/types";
 import React from "react";
 
 const DeleteWord = (props: PropsForComponent) => {
+  const {isDeleting, setIsDeleting} = props
+
   return (
     <button
       onClick={() => {
-        switch (props.isDeleting) {
+        switch (isDeleting) {
           case "NULL":
-            props.setIsDeleting("DELETE");
+            setIsDeleting("DELETE");
             break;
           case "DELETE":
-            props.setIsDeleting("FINISH");
+            setIsDeleting("FINISH");
             break;
         }
       }}

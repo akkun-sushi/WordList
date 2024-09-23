@@ -2,15 +2,17 @@ import { PropsForComponent } from "@/app/api/wordQuiz/types";
 import React from "react";
 
 const EditWord = (props: PropsForComponent) => {
+  const { isEditing, setIsEditing } = props;
+
   return (
     <button
       onClick={() => {
-        switch (props.isEditing) {
+        switch (isEditing) {
           case "NULL":
-            props.setIsEditing("EDIT");
+            setIsEditing("EDIT");
             break;
           case "EDIT":
-            props.setIsEditing("FINISH");
+            setIsEditing("FINISH");
             break;
         }
       }}
