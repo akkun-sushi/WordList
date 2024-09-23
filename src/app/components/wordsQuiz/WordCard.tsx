@@ -1,11 +1,8 @@
 "use client";
 
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { Words } from "../../types";
-import { Data, WordCardProps } from "@/app/api/wordQuiz/types";
-import { update } from "@react-spring/three";
+import React, { useEffect, useState } from "react";
+import { WordCardProps } from "@/app/api/wordQuiz/types";
 import { Delete, Update } from "@/app/api/wordQuiz/route";
-import { is } from "date-fns/locale";
 
 const WordCard = ({
   id,
@@ -40,7 +37,17 @@ const WordCard = ({
       }
       setIsDeleting("NULL");
     }
-  }, [isEditing, clicked, isDeleting]);
+  }, [
+    id,
+    term,
+    meaning,
+    clicked,
+    targetId,
+    isEditing,
+    setIsEditing,
+    isDeleting,
+    setIsDeleting,
+  ]);
 
   return (
     <section className="pr-4 flex flex-col md:flex-row">

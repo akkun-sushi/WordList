@@ -41,7 +41,7 @@ const SortWord = (props: PropsForComponent) => {
     };
     //状態が変更され次第、画面更新
     getAll();
-  }, [sortType, isAdding, isEditing, isDeleting]);
+  }, [setData, sortType, isAdding, isEditing, isDeleting]);
 
   return (
     <select
