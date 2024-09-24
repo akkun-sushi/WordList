@@ -26,7 +26,7 @@ const WordQuiz = () => {
   }, []);
 
   return (
-    <main className="flex flex-col items-center min-h-screen w-screen bg-blue-200 py-8">
+    <main className="flex flex-col items-center fullscreen w-screen bg-blue-200 py-8">
       <Link
         href="/wordQuiz/createList"
         className="text-4xl md:text-5xl font-bold border-4 border-black p-2 md:p-4 rounded-lg"
@@ -34,7 +34,7 @@ const WordQuiz = () => {
         リスト作成
       </Link>
       {data.length > 0 && (
-        <section className="w-full h-screen">
+        <section className="w-full h-full ">
           <div className="mt-6 md:mt-10 flex justify-between items-center">
             <h1 className="my-2 ml-6 md:ml-60 text-2xl md:text-4xl font-bold">
               最新のリスト
