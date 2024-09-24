@@ -19,6 +19,7 @@ export type IsEditing = "FINISH" | "EDIT" | "NULL";
 export type IsDeleting = "FINISH" | "DELETE" | "NULL";
 
 export interface PropsForComponent {
+  data: Data[];
   setData: Dispatch<SetStateAction<Data[]>>;
   sortType: SortType;
   setSortType: Dispatch<SetStateAction<SortType>>;
