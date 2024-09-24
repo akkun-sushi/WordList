@@ -6,8 +6,8 @@ import React, {
   useReducer,
   useState,
 } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { format } from "date-fns";
+import { GetAll, Insert } from "../api/record/route";
 
 const Tasks = () => {
   const [record, setRecord] = useState(true);
@@ -15,15 +15,9 @@ const Tasks = () => {
   const [weeklytotalHour, setWeeklytotalHour] = useState(0);
   const [display, setDisplay] = useState("ALL");
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
   //学習時間取得
   const fetchData = async (content: string) => {
-    const res = await fetch(`${API_URL}/api/record`, {
-      method: "GET",
-      cache: "no-store",
-    });
-    const datas = await res.json();
+    const data = await GetAll();
 
     const now = new Date();
     const dayOfWeek = now.getDay();
@@ -33,13 +27,13 @@ const Tasks = () => {
 
     let [totalHour, weeklytotalHour] = [0, 0];
 
-    datas.forEach((data: formState) => {
-      if (content === "ALL" || data.content === content) {
+    data?.forEach((item: formState) => {
+      if (content === "ALL" || item.content === content) {
         const hourToMinute = parseFloat(
-          (Number(data.hour) + Number(data.minute) / 60).toFixed(1)
+          (Number(item.hour) + Number(item.minute) / 60).toFixed(1)
         );
         totalHour += hourToMinute;
-        if (new Date(data.date) >= currentMonday) {
+        if (new Date(item.date) >= currentMonday) {
           weeklytotalHour += hourToMinute;
         }
       }
@@ -55,7 +49,6 @@ const Tasks = () => {
   }, []);
 
   type formState = {
-    key: string;
     date: string;
     hour: string;
     minute: string;
@@ -64,8 +57,16 @@ const Tasks = () => {
 
   type formAction = {
     type: "RECORD";
-    field: "key" | "date" | "hour" | "minute" | "content";
+    field: "date" | "hour" | "minute" | "content";
     payload: string;
+  };
+
+  //フォーム初期値
+  const initialstate: formState = {
+    date: format(new Date(), "yyyy-MM-dd"),
+    hour: "0",
+    minute: "0",
+    content: "CA",
   };
 
   //フォーム変更
@@ -80,15 +81,6 @@ const Tasks = () => {
         return state;
     }
   }
-
-  //フォーム初期値
-  const initialstate: formState = {
-    key: uuidv4(),
-    date: format(new Date(), "yyyy-MM-dd"),
-    hour: "0",
-    minute: "0",
-    content: "CA",
-  };
 
   //フォーム入力状態
   const [state, dispatch] = useReducer(formReducer, initialstate);
@@ -114,24 +106,8 @@ const Tasks = () => {
   //フォーム送信
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    dispatch({
-      type: "RECORD",
-      field: "key",
-      payload: uuidv4(),
-    });
-
-    await fetch(`${API_URL}/api/record`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        key: state.key,
-        date: state.date,
-        hour: state.hour,
-        minute: state.minute,
-        content: state.content,
-      }),
-    });
+    console.log(state.date, state.hour, state.minute, state.content);
+    await Insert(state.date, state.hour, state.minute, state.content)
 
     //学習時間更新
     setDisplay(state.content);

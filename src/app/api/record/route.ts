@@ -2,6 +2,26 @@ import { supabase } from "@/utils/supabase";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
+//全データ取得
+export const GetAll = async () => {
+  const { data } = await supabase.from("record").select("*");
+  return data;
+};
+
+//データ追加
+export const Insert = async (
+  date: string,
+  hour: string,
+  minute: string,
+  content: string
+) => {
+  await supabase
+    .from("record")
+    .insert([{ date, hour, minute, content }])
+    .select();
+};
+
+/*
 export async function GET(req: Request, res: NextApiResponse) {
   const { data, error } = await supabase.from("record").select("*");
 
@@ -58,3 +78,4 @@ export async function OPTIONS() {
 
   return response;
 }
+*/

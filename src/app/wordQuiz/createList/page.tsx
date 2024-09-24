@@ -35,7 +35,7 @@ const CreateList = () => {
   };
 
   return (
-    <main className="flex flex-col items-center min-h-screen w-screen bg-blue-200 py-8">
+    <main className="flex flex-col items-center min-h-screen w-screen bg-blue-200 py-8 overflow-x-hidden">
       <Link href="/wordQuiz" className="text-xl md:text-3xl w-full text-left font-bold text-black hover:text-red-500 ml-16 md:ml-72 -mt-4 -mb-4 md:-mb-6">
         戻る
       </Link>
