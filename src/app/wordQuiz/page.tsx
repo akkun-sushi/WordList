@@ -1,54 +1,68 @@
 "use client";
 
-import React, { useState } from "react";
-import AddWord from "../components/wordsQuiz/AddWord";
-import { Data, IsDeleting, IsEditing, SortType } from "../api/wordQuiz/types";
-import WordCard from "../components/wordsQuiz/WordCard";
-import EditWord from "../components/wordsQuiz/EditWord";
-import DeleteWord from "../components/wordsQuiz/DeleteWord";
-import SortWord from "../components/wordsQuiz/SortWord";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { GetAll } from "../api/wordQuiz/route";
+import { Data } from "../api/wordQuiz/types";
 
 const WordQuiz = () => {
   const [data, setData] = useState<Data[]>([]);
-  const [sortType, setSortType] = useState<SortType>("CREATION_ASC");
-  const [isAdding, setIsAdding] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState<IsEditing>("NULL");
-  const [isDeleting, setIsDeleting] = useState<IsDeleting>("NULL");
+  const [firstData, setFirstData] = useState<Data>({
+    id: "",
+    term: "",
+    meaning: "",
+    created_at: "",
+  });
+  const [clicked, setClicked] = useState(false);
 
-  const props = {
-    setData,
-    sortType,
-    setSortType,
-    isAdding,
-    setIsAdding,
-    isEditing,
-    setIsEditing,
-    isDeleting,
-    setIsDeleting,
-  };
+  //データ取得
+  useEffect(() => {
+    const getAll = async () => {
+      const data = await GetAll();
+      setData(data || []);
+      setFirstData(data?.[data?.length - 1]);
+    };
+    getAll();
+  }, []);
 
   return (
     <main className="flex flex-col items-center min-h-screen w-screen bg-blue-200 py-8">
-      <h1 className="text-4xl font-bold text-black">単語リスト</h1>
-      <div className="bg-white w-3/4 max-w-6xl shadow-lg rounded-lg mt-5 px-4 py-4 md:mt-10 md:py-6">
-        <AddWord {...props} />
-      </div>
-      <div className="bg-white w-3/4 max-w-6xl shadow-lg rounded-lg flex flex-col mt-5 py-4 md:mt-10 md:px-10 md:py-8">
-        <SortWord {...props} />
-        <div className="flex flex-row mx-4 md:mx-20 md: mt-5">
-          <EditWord {...props} />
-          <DeleteWord {...props} />
-        </div>
-      </div>
-      <div className="bg-white w-3/4 max-w-6xl shadow-lg rounded-lg mt-5 pl-12 md:pl-14 py-4 md:mt-10">
-        <ol className="text-2xl list-decimal">
-          {data.map((item) => (
-            <li key={item.id} className="my-4">
-              <WordCard {...item} {...props} />
-            </li>
-          ))}
-        </ol>
-      </div>
+      <Link
+        href="/wordQuiz/createList"
+        className="text-4xl md:text-5xl font-bold border-4 border-black p-2 md:p-4 rounded-lg"
+      >
+        リスト作成
+      </Link>
+      {data.length > 0 && (
+        <section className="w-full h-screen">
+          <div className="mt-6 md:mt-10 flex justify-between items-center">
+            <h1 className="my-2 ml-6 md:ml-60 text-2xl md:text-4xl font-bold">
+              最新のリスト
+            </h1>
+            <Link
+              href="/wordQuiz/learnWord"
+              className="mr-10 md:mr-60 text-2xl md:text-4xl font-bold bg-green-400 text-white px-6 md:px-12 py-2 rounded-2xl"
+            >
+              学習
+            </Link>
+          </div>
+          <div
+            onClick={() => setClicked(!clicked)}
+            className="w-4/5 md:w-3/5 h-1/4 md:h-1/2 bg-white rounded-2xl m-auto mt-4 md:mt-6 px-3 py-5"
+          >
+            <div className="h-4/5 flex items-center justify-center">
+              <h1 className="text-4xl md:text-6xl font-bold break-words">
+                {clicked ? firstData.meaning : firstData.term}
+              </h1>
+            </div>
+            <h3 className="w-full md:text-2xl text-center">
+              タップしたら
+              <span className="font-bold">{clicked ? "用語" : "意味"}</span>
+              を表示
+            </h3>
+          </div>
+        </section>
+      )}
     </main>
   );
 };
